@@ -19,12 +19,8 @@ NEWSPIDER_MODULE = 'auto_config_ss.spiders'
 #USER_AGENT = 'auto_config_ss (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
-#configure selenium driver
-SELENIUM_DRIVER_NAME = 'chrome'
-SELENIUM_DRIVER_EXECUTABLE_PATH = r'E:\Code\execution\chromedriver\chromedriver.exe'
-SELENIUM_DRIVER_ARGUMENTS=['--headless']  # '--headless' if using chrome instead of firefox
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -32,7 +28,7 @@ SELENIUM_DRIVER_ARGUMENTS=['--headless']  # '--headless' if using chrome instead
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -55,10 +51,20 @@ SELENIUM_DRIVER_ARGUMENTS=['--headless']  # '--headless' if using chrome instead
 #    'auto_config_ss.middlewares.AutoConfigSsSpiderMiddleware': 543,
 #}
 
+#configure selenium driver(firefox)
+# SELENIUM_DRIVER_NAME = 'firefox'
+# SELENIUM_DRIVER_EXECUTABLE_PATH = r'E:\Code\execution\firefoxdriver\geckodriver.exe'
+# SELENIUM_DRIVER_ARGUMENTS=['-headless']  # '--headless' if using chrome instead of firefox
+
+#configure selenium driver(chrome)
+SELENIUM_DRIVER_NAME = 'chrome'
+SELENIUM_DRIVER_EXECUTABLE_PATH = r'E:\Code\execution\chromedriver\chromedriver.exe'
+SELENIUM_DRIVER_ARGUMENTS=['--headless']  # '--headless' if using chrome instead of firefox
 #enable SeleniumMiddleware
 DOWNLOADER_MIDDLEWARES = {
     'scrapy_selenium.SeleniumMiddleware': 800
 }
+
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
@@ -74,9 +80,10 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'auto_config_ss.pipelines.AutoConfigSsPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'auto_config_ss.pipelines.JsonItemPipeline': 300,
+   'auto_config_ss.pipelines.FilterItemPipeline': 500
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
